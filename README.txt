@@ -7,7 +7,8 @@ LatticeSound 2D is a high-performances two dimensional multi-material meso-scala
 multithread code for mixed oscillation modes in Lattice Thermal Quantum Field Theory 
 of phonons.
 It can simulate the sound, vibration or noise propagation inside a 2 dimensional 
-lattice initialized with different materials of different shapes.
+lattice initialized with different materials of different shapes, fully coupled
+with electromagnetic field.
 
 Theory ensures that scaling is performed in such a way as to maintain the results at
 the correct resonance frequencies, so that the behavior of the aggregates reflects a
