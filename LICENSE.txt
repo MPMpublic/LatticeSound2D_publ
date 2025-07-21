@@ -1,0 +1,29 @@
+                   License of LatticeSound (2D open-source)
+                    GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+Copyright (C) 2025  Giorgio Lo Presti as MPMpublic
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+===============================================================
+Additional Disclaimer
+
+This software is provided "as is" and without any warranty or condition of any kind, either express or implied.
+
+The authors disclaim all liability for any damages or losses, whether direct, indirect, incidental, special, exemplary, or consequential, arising out of or in connection with the use or misuse of this software.
+
+The results produced by this software should not be considered authoritative. Decisions, analyses, or actions based solely on the output of this program are taken entirely at the user's own risk.
+
+The authors assume no responsibility for the consequences of using this software in critical or real-world systems without proper verification and validation.

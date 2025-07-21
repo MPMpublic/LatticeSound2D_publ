@@ -1,0 +1,44 @@
+INFORMATICS
+debug=False
+thread_num=1
+
+SYSTEM
+chamX=3
+chamY=3
+chamZ=1
+D=2 
+Temperature=0.001
+scaling=2
+thermal_coupling=0.1
+
+TIME INFO
+temporal_sensitivity=0.01
+temporal_steps=101
+
+BASE LATTICE
+material=H2_O
+state=solid
+
+FORCING
+[0.,0.,0.]
+[2.3,5.2,7.8]
+
+[0.0,0.0,0.0]
+[2.3,5.2,7.8]
+
+[0.,0.,0.]
+[0.,0.,0.]
+
+BUILDINGS
+N_buildings=1
+lattice[1][1]=[0.5,1,0,0]
+duallattice[1][1]=[1,1,0.1,1]
+TwoD_object.create([3, 3], "air", "solid", 2, 0.1, 273, ["rectangle",[2, 2]])
+
+OUTPUT
+output_time=10
+HERE SUBSTITUTE THIS LINE WITH THE ABSOLUTE PATH IN WHICH YOU DESIRE THE RESULTS
+Plot=True
+cX_plot=[0,3]
+cY_plot=[0,3]
+cZ_plot=[0,0];

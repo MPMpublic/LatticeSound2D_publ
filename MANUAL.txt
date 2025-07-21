@@ -1,0 +1,133 @@
+***********************************************************************************
+INSTALLATION
+Download the libraries
+
+Create a LatticeSound folder wherever you like on your computer (not a system folder).
+
+Here you can proceed as you prefer: either create a git repository in that folder or download the files directly to that folder.
+
+Create a second folder (wherever you like, but not a system folder) for the results.
+
+Open the starter file (found among the downloaded files) and enter the full, absolute path to the results folder in the appropriate line.
+
+You're ready to run the code.
+***********************************************************************************
+LAUNCH THE CODE
+First, open the starter.flsm file and follow the guide on the start file to complete it (in any case, aside from the path, there's an example already set).
+
+Open a command prompt or bash window and run the following command to launch it:
+python3 LSM.py
+***********************************************************************************
+START.LSMF
+It is a UTF-8 decoded file, but it is a fixed and specific format, which ends with ";"!
+It is really simple to use, each cathegory has a title (i.e. SYSTEM),
+
+here an example:
+INFORMATICS 
+debug=False */Debug mode (it is for us, leave it false)
+thread_num=1 */a natural number (according with the thread availability of you pc)
+
+SYSTEM */chamz must be 1. Select the number of oscillation centers for each axes
+chamX=3
+chamY=3
+chamZ=1
+D=2 */must be 2
+Temperature=0.001 */in kelvin, don't put 0, a small number stands for 0 kelvin
+scaling=2 */the scaling ration of your system (a real number is possible but not so physical)
+thermal_coupling=0.1 */the proportion between acquired energy from external envirnment and loss
+
+TIME INFO
+temporal_sensitivity=0.01 */frequency of time calculation with respect to normalized time
+temporal_steps=101 */Number of temporal steps with respect to normalized time
+
+BASE LATTICE
+material=H2_O */or air (sorry, just 2 up to now)
+state=solid */or liquid. If solid transverse impulse is permitted
+
+FORCING*/you can select as many modulating harmonics as you prefer, just increasing the length of these vectors, but keep equal the number of amplitudes and the number of frequencies!
+[0.,0.,0.] */x axes amplitude
+[2.3,5.2,7.8]*/x axes omegas
+
+[0.0,0.0,0.0]*/y axes 
+[2.3,5.2,7.8]
+
+[0.,0.,0.]*/z axes 
+[0.,0.,0.]
+
+BUILDINGS */here 3 examples of buildings. All of them can be applied (but the third is for big systems), go on with the explanation for more info
+N_buildings=1
+lattice[1][1]=[0.5,1,0,0]
+duallattice[1][1]=[1,1,0.1,1]
+TwoD_object.create([3, 3], "air", "solid", 2, 0.1, 273, ["rectangle",[2, 2]])
+
+OUTPUT
+output_time=10 */it makes the analysis and give you back the information each output_time/temporal_steps
+HERE SUBSTITUTE THIS LINE WITH THE ABSOLUTE PATH IN WHICH YOU DESIRE THE RESULTS
+Plot=True*/or False (put False for more then 60x60 ci_plot but it may change depending on your system)
+cX_plot=[0,3] */ Output window. For each axes you can select where to start and where to arrive with plot and detailed data
+cY_plot=[0,3]
+cZ_plot=[0,0];*/leave it as it is
+***********************************************************************************
+INTRUSIONS
+Known as Buildings. They are of two types: lattice objects and TwoD objects.
+
+Remember not to provide conflicting input: the code inserts objects one after the other in the order they are inserted, so multiple inputs for a single point will be interpreted as a single input (the final one), with the exception of one case, which we will now analyze.
+
+Lattice objects are themselves of two types: lattice and duallattice. These only update the condition of an element. Lattice updates the x- and y-positions and the x- and y-velocity values and must be entered in a normalized manner. The dual lattice, on the other hand, is an array that contains the mass, spring constant, dissipation constant, and the 0/1 information (0 if fluid, 1 if solid, and this must be an integer) in a normalized manner for the base element of the structure. 
+It is assumed that the user enters the relative scaling correctly for dual lattice command to have physical meaning. These two commands are the only ones that can be used together on a single element without overwriting each other.
+
+TwoD objects, on the other hand, define three different shapes: rectangles, ellipses, and "undefined."
+
+There are several command formats, but the recommended one is:
+TwoD_object.create([central x, central y], "material", "aggregation state", absolute scaling, relative ratio of scaling, temperature in Kelvin, ["shape", [semi-axes x, semi-axes y]]).
+Note: The temperature of the TwoD object can be different from that of the rest of the lattice.
+
+Rectangles and ellipses are obvious. Undefined objects randomly insert centroids of different phases with an elliptical shape.
+***********************************************************************************
+READING PLOT MEASURES
+Automatic plots can be enabled or disabled. They are plotted based on the output frequency selected in the starter. In any case, the code performs basic data analysis for each selected output time step even when plots are disabled.
+
+Legend: Dots indicate positions in unit xy coordinates, arrows indicate relative velocities normalized on the individual plot, and the color indicates force intensity normalized on the individual plot from blue to yellow.
+***********************************************************************************
+OUTPUT FILE MANAGEMENT
+Two types of output files are released along with the automatic plot of graphs. Please contact us for more in-depth analysis.
+
+These are the "trd" files that are released every output interval for each thread. They report the position of each oscillation center (in the selected plot window) in terms of indices, positions, sqm, velocities, sqm of velocities, strain, and sqm of forces for the x- and y-axis. This data is provided in normalized units.
+
+At the beginning of the file are the averages of all these quantities (regardless of the selected window that enables or disables printing only) for each oscillator interval assigned to a given thread.
+
+Automatic plots have a dedicated section.
+
+The second type of file reports information on the typical system quantities and the time-varying averages of all threads of the quantities reported in the previous files.
+
+Example:
+Effective length [m]: 1.018195857623674e-09
+Effective mass [kg]: 1.196413747302009e-25
+Effective elastic const [kg/s^2]: 2.1250323783547787
+Effective viscosity const [1/s]: 3.9546374167199166e-14
+Effective omega0 [rad/s]: 4214461380505.186
+thermal_coupling [ ]: 0.1
+
+then with respect to time (these are normalized):
+Displacements
+[-0.497819529946244, 0.0] (left: x-axes, right: y-axes)
+[-0.261035274805003, 0.0]
+[0.17869575094012, 0.0]
+[0.480468245394617, 0.0]
+...
+***********************************************************************************
+Thermal coupling
+For each oscillator and time step, randomly a photon interacts. If you want to increase
+time precision, you better divide the amplitude of the process if you want to decrease
+the number of photons. This random number indicates in which direction in decomposed
+the photon pulse. Then it enters the differential equation as opposite to the dissipation term.
+You can turn it off just writing 0 in start file.
+
+***********************************************************************************
+UPDATES
+Very few updates will be done (3D code will be released) but follow the page or write me for 
+updates. You will be required to substitute the updated files or update your git repository.
+***********************************************************************************
+CONTACT US
+giorgio.lopresti@dfa.unict.it 
+giorgiolopresti@lns.infn.it
